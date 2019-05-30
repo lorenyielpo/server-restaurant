@@ -1,6 +1,6 @@
-import express from "express"
+const express = require("express")
 
-const comidas = {
+const pratosFavs = {
     comidas: [{
         nome: "Batata frita",
         descricao: "melhor batata frita",
@@ -20,14 +20,30 @@ const comidas = {
         nome: "Feijoada vegana",
         descricao: "melhor feijoada",
         imagem: "https://veganapratica.com/wp-content/uploads/2018/06/IMG_2621-copy.jpg"
+    },
+    {
+        nome: "Pizza de brocólis",
+        descricao: "melhor pizza ",
+        imagem: "https://media-cdn.tripadvisor.com/media/photo-s/0f/13/d4/e3/pizza-de-brocolis.jpg"
+    },
+    {
+        nome: "Pão de queijo",
+        descricao: "mineirim",
+        imagem: "https://panelinha-sitenovo.s3-sa-east-1.amazonaws.com/receita/1543943903839-pa%CC%83o%20de%20queijo.jpg"
+    },
+    {
+        nome: "Shwarma de falafel",
+        descricao: "comida árabe é a melhor",
+        imagem: "https://media-cdn.tripadvisor.com/media/photo-s/12/9d/d5/ef/shawarma-de-falafel.jpg"
     }
     ]
 }
 
 const servidor = express()
 
-servidor.get("comidas", (request, response)=>{
-    response.send("Boa noite, amigas!")
+servidor.get("/comidas", (request, response)=>{
+    response.header("Access-Control-Allow-Origin", "*")
+    response.send(pratosFavs)
 })
 
 servidor.listen(3000)
