@@ -41,6 +41,11 @@ const getAll = () => {
  return pratosFavs
 }
 
+const add = (comida) => {
+    pratosFavs.comidas.push(comida)
+}
+
 module.exports = {
-    getAll
+    getAll, 
+    add
 }
