@@ -1,7 +1,7 @@
 const repository = require("./ComidasRepository")
 
 const getAll = () => {
- return repository
+ return repository.pratosFavs
 }
 
 const add = (comida) => {
