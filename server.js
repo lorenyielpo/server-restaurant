@@ -7,14 +7,20 @@ const controller = require("./ComidasController")
 
 const servidor = express()
 servidor.use(cors())
+servidor.use(bodyParser.json())
 
 servidor.get("/comidas", (request, response)=>{
     response.send(controller.getAll())
 })
 
-servidor.post("/comidas", bodyParser.json(), (request, response)=>{
+servidor.post("/comidas", (request, response)=>{
     controller.add(request.body)
-    response.send(201)
+    response.sendStatus(201)
+})
+
+servidor.delete("/comidas/:id", (request, response)=>{
+    controller.remove(request.params.id)
+    response.sendStatus(204)
 })
 
 servidor.listen(3000)
