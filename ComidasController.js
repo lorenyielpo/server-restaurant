@@ -10,15 +10,21 @@ const add = (comida) => {
 }
 
 const remove = (id) => {
-    getAll().comidas = pratosRestantes.comidas.filter((comida)=>{
+    getAll().comidas = getAll().comidas.filter((comida)=>{
         return comida.id !== id
     })
+}
 
+const change = (item) => {
+    getAll().comidas = getAll().comidas.filter((comida)=>{
+        return comida.imagem = item
+    })
 }
 
 
 module.exports = {
     getAll, 
     add,
-    remove
+    remove,
+    change
 }

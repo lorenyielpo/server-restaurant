@@ -15,12 +15,17 @@ servidor.get("/comidas", (request, response)=>{
 
 servidor.post("/comidas", (request, response)=>{
     controller.add(request.body)
-    response.sendStatus(201)
+    response.send(201)
 })
 
 servidor.delete("/comidas/:id", (request, response)=>{
     controller.remove(request.params.id)
-    response.sendStatus(204)
+    response.send(204)
+})
+
+servidor.put("/comidas/:id", (request, response)=>{
+    controller.change(request.body)
+    response.send(204)
 })
 
 servidor.listen(3000)
