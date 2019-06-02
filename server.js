@@ -24,7 +24,7 @@ servidor.delete("/comidas/:id", (request, response)=>{
 })
 
 servidor.put("/comidas/:id", (request, response)=>{
-    controller.change(request.body)
+    controller.change(request.params.id, request.body)
     response.send(204)
 })
 
