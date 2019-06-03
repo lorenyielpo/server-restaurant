@@ -15,9 +15,15 @@ const remove = (id) => {
     })
 }
 
-const change = (item) => {
-    getAll().comidas = getAll().comidas.filter((comida)=>{
-        return comida.imagem = item
+const change = (id, conteudo) => {
+    let prato = getAll().comidas
+    prato.filter((comida)=>{
+        if(comida.id == id){
+            let nome = () => {comida.nome = conteudo.nome}
+            let descricao = () => {comida.descricao = conteudo.descricao}
+            let imagem = () => {comida.imagem = conteudo.imagem}
+            return nome(), descricao(), imagem()
+        }
     })
 }
 
