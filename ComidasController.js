@@ -1,36 +1,63 @@
 const repository = require("./ComidasRepository")
 
 const getAll = () => {
- return repository.pratosFavs
+    return repository.pratosFavs.comidas
 }
 
 const add = (comida) => {
     comida.id = Math.random().toString(36).substr(-8)
-    getAll().comidas.push(comida)
+    getAll().push(comida)
 }
 
 const remove = (id) => {
-    getAll().comidas = getAll().comidas.filter((comida)=>{
+    getAll() = getAll().filter((comida) => {
         return comida.id !== id
     })
 }
 
 const change = (id, conteudo) => {
-    let prato = getAll().comidas
-    prato.filter((comida)=>{
-        if(comida.id == id){
-            let nome = () => {comida.nome = conteudo.nome}
-            let descricao = () => {comida.descricao = conteudo.descricao}
-            let imagem = () => {comida.imagem = conteudo.imagem}
-            return nome(), descricao(), imagem()
-        }
+    let prato = getAll()
+    prato.find((comida) => {
+        return comida.id === id
     })
+    if (prato.id === undefined) {
+        return false
+    }
+    
+    prato.nome = conteudo.nome
+    prato.descricao = conteudo.descricao
+    prato.imagem = conteudo.imagem
+
+    return true
+}
+
+const update = (id, comida) => {
+    let comidaId = getAll().find(comida => {
+        return comida.id === id
+    })
+
+    if (comida.id === undefined) {
+        return false
+    }
+
+    if (comida.nome !== undefined) {
+        comidaId.nome = comida.nome
+    }
+    if (comida.descricao !== undefined) {
+        comidaId.descricao = comida.descricao
+    }
+    if (comida.imagem !== undefined) {
+        comidaId.imagem = comida.imagem
+    }
+
+    return true
 }
 
 
 module.exports = {
-    getAll, 
+    getAll,
     add,
     remove,
-    change
+    change,
+    update
 }
