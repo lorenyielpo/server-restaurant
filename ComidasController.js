@@ -1,12 +1,22 @@
 const repository = require("./ComidasRepository")
+const comidasModel = require("./ComidasSchema")
 
-const getAll = () => {
-    return repository.pratosFavs.comidas
+repository.connect()
+
+const getAll = async () => {
+    return comidasModel.find()
 }
 
+const getById = async (id) => {
+    return comidasModel.findById(id, (error, comida) => {
+        return comida
+    })
+}
+
+
 const add = (comida) => {
-    comida.id = Math.random().toString(36).substr(-8)
-    getAll().push(comida)
+    let comidaNova = new comidasModel({nome: comida.nome, descricao: comida.descricao, imagem: comida.imagem})
+    return comidaNova.save()
 }
 
 const remove = (id) => {
@@ -56,6 +66,7 @@ const update = (id, comida) => {
 
 module.exports = {
     getAll,
+    getById,
     add,
     remove,
     change,

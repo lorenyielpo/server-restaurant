@@ -9,17 +9,21 @@ const servidor = express()
 servidor.use(cors())
 servidor.use(bodyParser.json())
 
-servidor.get("/comidas", (request, response) => {
-    response.send(controller.getAll())
+servidor.get("/comidas", async(request, response) => {
+    controller.getAll()
+        .then(resultado => response.send(resultado))
 })
-
-// servidor.get("/comidas/:id", (request, response)=>{
-//     controller.
-// })
 
 servidor.post("/comidas", (request, response) => {
     controller.add(request.body)
     response.send(201)
+})
+
+servidor.get("/comidas/:id", async(request, response)=>{
+    const id = request.params.id
+    controller.getAll(id)
+    .then(resultado => response.send(resultado))
+    
 })
 
 servidor.delete("/comidas/:id", (request, response) => {

@@ -1,7 +1,19 @@
-const pratosFavs = {
-    comidas: []
+const mongoose = require('mongoose')
+
+// string de conexão:
+// mongodb://dominio:porta/nome_database
+
+const MONGO_URL = "mongodb://localhost:27017/reprograma"
+
+function connect(){
+    //toDo: conectar no nosso mongo usando a MONGO_URL
+    mongoose.connect(MONGO_URL, {useNewUrlParser: true}, (error)=>{
+        if(error){
+            console.error("Deu erro:", error)
+        } else{
+            console.log("Conectamos no mongodb")
+        }
+    });
 }
 
-module.exports = {
-    pratosFavs
-}
+module.exports = { connect}
