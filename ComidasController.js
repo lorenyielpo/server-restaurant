@@ -4,63 +4,46 @@ const comidasModel = require("./ComidasSchema")
 repository.connect()
 
 const getAll = async () => {
-    return comidasModel.find()
+    return comidasModel.find((error, comidas) => {
+        return comidas
+    })
 }
 
 const getById = async (id) => {
-    return comidasModel.findById(id, (error, comida) => {
-        return comida
-    })
+    return comidasModel.findById(id)
 }
 
 
 const add = (comida) => {
-    let comidaNova = new comidasModel({nome: comida.nome, descricao: comida.descricao, imagem: comida.imagem})
+    const comidaNova = new comidasModel({nome: comida.nome, descricao: comida.descricao, imagem: comida.imagem})
     return comidaNova.save()
 }
 
-const remove = (id) => {
-    getAll() = getAll().filter((comida) => {
-        return comida.id !== id
-    })
+const remove = async (id) => {
+    return comidasModel.findByIdAndDelete(id)
 }
 
-const change = (id, conteudo) => {
-    let prato = getAll()
-    prato.find((comida) => {
-        return comida.id === id
-    })
-    if (prato.id === undefined) {
-        return false
-    }
+// const change = (id, conteudo) => {
+//     let prato = getAll()
+//     prato.find((comida) => {
+//         return comida.id === id
+//     })
+//     if (prato.id === undefined) {
+//         return false
+//     }
     
-    prato.nome = conteudo.nome
-    prato.descricao = conteudo.descricao
-    prato.imagem = conteudo.imagem
+//     prato.nome = conteudo.nome
+//     prato.descricao = conteudo.descricao
+//     prato.imagem = conteudo.imagem
 
-    return true
-}
+//     return true
+// }
 
 const update = (id, comida) => {
-    let comidaId = getAll().find(comida => {
-        return comida.id === id
-    })
-
-    if (comida.id === undefined) {
-        return false
-    }
-
-    if (comida.nome !== undefined) {
-        comidaId.nome = comida.nome
-    }
-    if (comida.descricao !== undefined) {
-        comidaId.descricao = comida.descricao
-    }
-    if (comida.imagem !== undefined) {
-        comidaId.imagem = comida.imagem
-    }
-
-    return true
+    return comidasModel.findByIdAndUpdate(id,
+        {$set: comida},
+        {new: true},
+        )
 }
 
 
@@ -69,6 +52,6 @@ module.exports = {
     getById,
     add,
     remove,
-    change,
+    // change,
     update
 }
