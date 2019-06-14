@@ -10,15 +10,17 @@ servidor.use(cors())
 servidor.use(bodyParser.json())
 
 servidor.get("/comidas", (request, response) => {
+    
     controller.getAll()
         .then(resultado => response.send(resultado))
 })
 
 servidor.get("/comidas/:id", (request, response)=>{
-    const id = request.params.id
-    controller.getAll(id)
+
+    controller.getAll(request.params.id)
+
         .then(resultado => {
-            if(!comida){
+            if(!resultado){
                 response.send(404)
             }else{
                 response.send(resultado)
@@ -36,14 +38,41 @@ servidor.get("/comidas/:id", (request, response)=>{
 
 servidor.post("/comidas", (request, response) => {
     
-    response.send(controller.add(request.body))
+    controller.add(request.body)
+
+    .then(resultado => {
+        if(!resultado.nome){
+            response.send(404)
+        }else{
+            response.send(resultado._id)
+        }
+    })
+    .catch(error =>{
+        if(error.name === "ValidationError"){
+            response.send(400)
+        } else {
+            response.send(500)
+        }
+    })
 })
 
-servidor.delete("/comidas/:id", async(request, response) => {
+servidor.delete("/comidas/:id", (request, response) => {
+
     controller.remove(request.params.id)
-        .then(comida => response.send(204)
-    )
+
+        .then(resultado => {
+            if(!resultado){
+                response.send(404)
+            }else{
+                response.send(204)
+            }
+        })
+        .catch(error =>{
+            response.send(500)
+        })
 })
+
+    
 
 // servidor.put("/comidas/:id", (request, response) => {
 //     const sucess = controller.change(request.params.id, request.body)
@@ -55,13 +84,12 @@ servidor.delete("/comidas/:id", async(request, response) => {
 // })
 
 servidor.patch("/comidas/:id", (request, response) => {
-    const id = request.params.id
-    controller.update(id, request.body)
-        .then(comida =>{
-            if(!comida){
+    controller.update(request.params.id, request.body)
+        .then(resultado =>{
+            if(!resultado){
                 response.send(404)
             }else{
-               response.send(comida) 
+               response.send(resultado) 
             }
         })
 })
